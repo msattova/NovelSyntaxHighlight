@@ -1,0 +1,144 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Plain Text",
+	"patterns": [
+		{
+			"include": "#headers"
+		},
+		{
+			"include": "#texts"
+		},
+		{
+			"include": "#lines"
+		},
+		{
+			"include": "#nested_lines"
+		}
+	],
+	"repository": {
+    "keywords": {
+      "name": "support.class.plaintext",
+      "begin": "【",
+      "end": "】",
+      "patterns": [
+        {
+          "include": "#texts"
+        }
+      ]
+    },
+    "specials": {
+      "name": "constant.language",
+      "begin": "《",
+      "end": "》",
+      "patterns": [
+        {
+          "include": "#texts"
+        }
+      ]
+    },
+		"headers": {
+			"patterns": [
+				{
+					"name":"markup.heading.markdown",
+					"match": "^(#{1,5})\\s+.+"
+				}
+			]
+		},
+    "rubies": {
+      "patterns": [
+        {
+          "name": "storage.modifier",
+          "match": "(([\\|｜][^|《》]*)《[^《》]+》)"
+        },
+        {
+          "name": "storage.modifier",
+          "match": "(([\\u4E00-\\u9FFF\\u3005-\\u3007]+)《[^《》]+》)"
+        }
+      ]
+    },
+		"bouten":{
+			"patterns": [
+				{
+					"name":"support.function",
+					"match": "《《[^《》]*》》"
+				}
+			]
+		},
+    "lines": {
+      "name": "string.quoted.single.plaintext",
+      "begin": "「",
+      "end": "」",
+      "patterns": [
+        {
+          "include": "$self"
+        },
+				{
+					"include": "#nested_lines"
+				},
+        {
+          "include": "#texts"
+        }
+      ]
+    },
+    "nested_lines": {
+      "name": "keyword.control",
+      "begin": "『",
+      "end": "』",
+      "patterns": [
+        {
+          "include": "$self"
+        },
+        {
+          "include": "#texts"
+        }
+      ]
+    },
+    "symbols": {
+      "patterns": [
+        {
+          "name": "storage.modifier.import.java",
+          "match": "[○●▽▼△▲□■◇◆☆★]"
+        },
+        {
+          "name": "storage.modifier.import.java",
+          "match": "[！？!?]"
+        },
+        {
+          "name": "variable.language.python",
+          "match": "(——|……|――)"
+        }
+      ]
+    },
+    "texts": {
+      "patterns": [
+        {
+          "include": "#numbers"
+        },
+        {
+          "include": "#symbols"
+        },
+        {
+          "include": "#rubies"
+        },
+        {
+          "include": "#bouten"
+        },
+        {
+          "include": "#keywords"
+        },
+        {
+          "include": "#specials"
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.plaintext",
+          "match": "[-+]?[0-9,]+"
+        }
+      ]
+    }
+  },
+	"scopeName": "source.txt"
+}
